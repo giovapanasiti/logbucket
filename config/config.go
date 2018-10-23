@@ -15,7 +15,7 @@ type Config struct {
 
 // Read and parse the configuration file
 func (c *Config) Read() {
-	if _, err := toml.DecodeFile("config.toml", &c); err != nil {
+	if _, err := toml.DecodeFile("/home/panasiti_g/app/logbucket/config.toml", &c); err != nil {
 		log.Fatal(err)
 	}
 }
