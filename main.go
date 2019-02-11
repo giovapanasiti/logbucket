@@ -1,16 +1,18 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
-	"net/http"
-	"log"
-	"github.com/giovapanasiti/logbucket/models"
-	. "github.com/giovapanasiti/logbucket/config"
-	"gopkg.in/mgo.v2/bson"
-	. "github.com/giovapanasiti/logbucket/dao"
 	"encoding/json"
 	"fmt"
+	"log"
+	"net/http"
+	"os"
 	"time"
+
+	. "github.com/giovapanasiti/logbucket/config"
+	. "github.com/giovapanasiti/logbucket/dao"
+	"github.com/giovapanasiti/logbucket/models"
+	"github.com/gorilla/mux"
+	"gopkg.in/mgo.v2/bson"
 )
 
 var dao = LogPortaleDAO{}
@@ -54,10 +56,9 @@ func respondWithJson(w http.ResponseWriter, code int, payload interface{}) {
 
 // Parse the configuration file 'config.toml', and establish a connection to DB
 func init() {
-	config.Read()
 
-	dao.Server = config.Server
-	dao.Database = config.Database
+	dao.Server = os.Getenv("MONGO_URL")
+	dao.Database = os.Getenv("MONGO_DB")
 	dao.Connect()
 }
 
